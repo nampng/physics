@@ -34,23 +34,18 @@ def simulator(run_time: float, bodies: List[Body], fields: List[Field] = None, s
 
     # Prep all bodies with field effects.
     if fields:
-        # [body.field_effect(fields) for body in bodies]
-        print(f"Before: {bodies}")
-        for idx,body in enumerate(bodies):
-            bodies[idx].field_effect(fields)
+        [body.field_effect(fields) for body in bodies]
         print(f"After field effects: {bodies}")
 
-    # while run_time > 0:
-    #     print(f"Time left: {run_time}")
-    #     for body in bodies:
-    #         body.tick()
-    #         if save_results:
-    #             with open(f"results/{body.name}.txt", "a") as file:
-    #                 file.write(repr(body))
-    #         print(body)
-    #     run_time -= DELTA
+    while run_time > 0:
+        print(f"Time left: {run_time}")
+        for body in bodies:
+            body.tick()
+            if save_results:
+                with open(f"results/{body.name}.txt", "a") as file:
+                    file.write(repr(body))
+            print(body)
+        run_time -= DELTA
 
 body = Body(name="body", position=Vector(0, 200))
-body2 = Body(name="body2", position=Vector(0, 200))
-body3 = Body(name="body3", position=Vector(0, 200))
-simulator(run_time = 5, bodies = [body, body2, body3], fields = [GRAVITY_FIELD])
+simulator(run_time = 10, bodies = [body], fields = [GRAVITY_FIELD])
